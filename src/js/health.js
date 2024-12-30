@@ -1,16 +1,21 @@
-export default function showHealth(units) {
-  let result;
-  if (units.health > 50) {
-    result = 'healthy';
+export default function colorHealth(data) {
+  if (data.name === undefined || data.health === undefined || typeof data.health === 'string') return null;
+  let healthLevel = '';
+
+  switch (true) {
+    case data.health > 0 && data.health < 15:
+      healthLevel = 'critical';
+      break;
+    case data.health >= 15 && data.health <= 50:
+      healthLevel = 'wounded';
+      break;
+    case data.health > 50:
+      healthLevel = 'healthy';
+      break;
+    default:
+      healthLevel = 'dead';
+      break;
   }
-  if (units.health <= 50 && units.health > 15) {
-    result = 'wounded';
-  }
-  if (units.health <= 15 && units.health > 0) {
-    result = 'critical';
-  }
-  if (Number.isNaN(units.health) || units.health === undefined || units.health < 0 || typeof (units.health) !== 'number') {
-    throw new Error('Parameter is not a number!');
-  }
-  return result;
+
+  return healthLevel;
 }

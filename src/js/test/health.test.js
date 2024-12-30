@@ -1,34 +1,41 @@
-import showHealth from '../health';
+import colorHealth from '../health';
 
-test('should healthy', () => {
-  const received = showHealth({ name: 'Маг', health: 90 });
-  expect(received).toBe('healthy');
+test('healthStatus = healthy', () => {
+  const data = { name: 'Маг', health: 90 };
+  expect(colorHealth(data)).toBe('healthy');
 });
 
-test('should wounded', () => {
-  const received = showHealth({ name: 'Маг', health: 40 });
-  expect(received).toBe('wounded');
+test('healthStatus = wounded', () => {
+  const data = { name: 'Маг', health: 40 };
+  expect(colorHealth(data)).toBe('wounded');
 });
 
-test('should critical', () => {
-  const received = showHealth({ name: 'Маг', health: 10 });
-  expect(received).toBe('critical');
+test('healthStatus = critical', () => {
+  const data = { name: 'Маг', health: 1 };
+  expect(colorHealth(data)).toBe('critical');
 });
 
-test('Parameter is not a number!', () => {
-  expect(() => {
-    showHealth({});
-  }).toThrow();
+test('healthStatus = dead', () => {
+  const data = { name: 'Маг', health: 0 };
+  expect(colorHealth(data)).toBe('dead');
 });
 
-test('Parameter is not a number!', () => {
-  expect(() => {
-    showHealth({ name: 'Маг', health: 'mistake' });
-  }).toThrow();
+test('healthStatus = dead', () => {
+  const data = { name: 'Маг', health: -30 };
+  expect(colorHealth(data)).toBe('dead');
 });
 
-test('Parameter is not a number!', () => {
-  expect(() => {
-    showHealth({ name: 'Маг', health: -10 });
-  }).toThrow();
+test('health: string', () => {
+  const data = { name: 'Маг', health: 'healthy' };
+  expect(colorHealth(data)).toBe(null);
+});
+
+test('health = undefined', () => {
+  const data = { name: 'Маг' };
+  expect(colorHealth(data)).toBe(null);
+});
+
+test('name = undefined', () => {
+  const data = { health: 90 };
+  expect(colorHealth(data)).toBe(null);
 });

@@ -1,5 +1,4 @@
-import showHealth from './health';
+import colorHealth from './health';
 
-console.log('worked');
-
-showHealth(70);
+const userObject = { name: 'Маг', health: 90 };
+console.log(colorHealth(userObject));
